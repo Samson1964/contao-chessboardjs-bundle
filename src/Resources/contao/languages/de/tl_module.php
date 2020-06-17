@@ -14,4 +14,4 @@
 /**
  * Felder für Ausgabemodul
  */
-$GLOBALS['TL_LANG']['tl_module']['linkscollection'] = array('Linksammlung', 'Linksammlung einbinden');
+$GLOBALS['TL_LANG']['tl_module']['chessboardjs'] = array('Diagramm mit Chessboard.js', 'Diagramm mit Chessboard.js anzeigen');

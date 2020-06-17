@@ -25,8 +25,7 @@ class Diagramm extends \Module
 	{
 		if (TL_MODE == 'BE')
 		{
-			//$objTemplate = new \BackendTemplate('be_linkscollection');
-
+			$objTemplate = new \BackendTemplate('be_wildcard');
 			$objTemplate->wildcard = '### CHESSBOARDJS ###';
 			$objTemplate->title = $this->name;
 			$objTemplate->id = $this->id;
@@ -43,7 +42,7 @@ class Diagramm extends \Module
 	protected function compile()
 	{
 		// Template füllen
-		$objTemplate = new \FrontendTemplate('mod_chessboardjs');
+		$objTemplate = new \FrontendTemplate($this->strTemplate);
 		$this->Template->links = $this->Subtemplate->parse();
 		$this->Template->counter = array('categories'=>$this->numberCategories,'links'=>$this->numberLinks);
 	}
