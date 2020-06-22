@@ -21,7 +21,7 @@ class Diagramm extends \Module
 	var $position;
 	var $halbzug;
 	var $brett;
-	
+
 	/**
 	 * Display a wildcard in the back end
 	 * @return string
@@ -122,7 +122,9 @@ class Diagramm extends \Module
 		$content .= '<div id="boardtext_'.$this->hash.'" class="chessboardjs_text" style="width:'.$this->chessboardjs_width.'"></div>'."\n";
 
 		$this->position = unserialize($this->chessboardjs_position);
-		$this->halbzug = unserialize($this->chessboardjs_move);
+		if($this->chessboardjs_playmode == 'chessboardjs1') $this->halbzug = unserialize($this->chessboardjs_move);
+		elseif($this->chessboardjs_playmode == 'chessboardjs2') $this->halbzug = unserialize($this->chessboardjs_fenplay);
+
 		self::getBrett(0);
 
 		// Buttons hinzufügen
@@ -131,7 +133,7 @@ class Diagramm extends \Module
 		// Skriptabschnitt erzeugen
 		$content .= '<script>'."\n";
 		$content .= 'var zug_'.$this->hash.' = 0;'."\n";
-		
+
 		// Nächster-Zug-Button verändern
 		if($this->halbzug) $content .= '$("#boardbutton_next_'.$this->hash.'").html("Nächster Zug (1 von '.count($this->halbzug).')");'."\n";
 
@@ -204,40 +206,92 @@ class Diagramm extends \Module
 			// Globaler Bereich
 			$content .= 'var config_'.$this->hash.' ='."\n";
 			$content .= '{'."\n";
+			$content .= 'moveSpeed: \'slow\','."\n";
+			$content .= 'snapbackSpeed: 500,'."\n";
+			$content .= 'snapSpeed: 100,'."\n";
 			$content .= 'showNotation: '.$koordinaten.','."\n";
-			$content .= $this->getFiguren();
+
+			if($this->chessboardjs_alternativePosition)
+			{
+				// Alternative Startstellung
+				if($this->chessboardjs_fen)
+				{
+					// FEN-Code wurde übergeben
+					self::setBrett($this->chessboardjs_fen);
+					$content .= 'position: \''.$this->chessboardjs_fen.'\''."\n";
+				}
+				else
+				{
+					// Normaler Modus mit gewünschter Stellung
+					$content .= $this->getFiguren();
+				}
+			}
+			else
+			{
+				// Grundstellung = Startstellung
+				$content .= 'position: \'start\''."\n";
+			}
+
 			$content .= '};'."\n";
 			$content .= 'var board_'.$this->hash.' = Chessboard(\'board_'.$this->hash.'\', config_'.$this->hash.');'."\n";
+			// Farben werden immer ausgewertet
 			$content .= $this->getFarben();
 			// Text zum Diagramm einfügen
 			if($this->chessboardjs_text) $content .= '$("#boardtext_'.$this->hash.'").html("'.$this->chessboardjs_text.'");'."\n";
 		}
 		else
 		{
-			// Andere Züge
-			$content .= 'var config_'.$this->hash.' ='."\n";
-			$content .= '{'."\n";
-			$content .= 'showNotation: '.$koordinaten.','."\n";
-			$content .= $this->getFiguren();
-			$content .= '};'."\n";
-			$content .= 'var board_'.$this->hash.' = Chessboard(\'board_'.$this->hash.'\', config_'.$this->hash.');'."\n";
-			$content .= $this->getFarben();
+			if($this->chessboardjs_playmode == 'chessboardjs1')
+			{
+				// Andere Züge
+				$content .= 'var config_'.$this->hash.' ='."\n";
+				$content .= '{'."\n";
+				$content .= 'moveSpeed: \'slow\','."\n";
+				$content .= 'snapbackSpeed: 500,'."\n";
+				$content .= 'snapSpeed: 100,'."\n";
+				$content .= 'showNotation: '.$koordinaten.','."\n";
+				$content .= $this->getFiguren();
+				$content .= '};'."\n";
+				$content .= 'var board_'.$this->hash.' = Chessboard(\'board_'.$this->hash.'\', config_'.$this->hash.');'."\n";
+				$content .= $this->getFarben();
 
-			// Neuen Text setzen
-			$content .= '$("#boardtext_'.$this->hash.'").html("'.$this->halbzug[$halbzug-1]['text'].'");'."\n";
+				// Neuen Text setzen
+				$content .= '$("#boardtext_'.$this->hash.'").html("'.$this->halbzug[$halbzug-1]['text'].'");'."\n";
+			}
+			elseif($this->chessboardjs_playmode == 'chessboardjs2')
+			{
+				// Andere Züge
+				$content .= 'var config_'.$this->hash.' ='."\n";
+				$content .= '{'."\n";
+				$content .= 'moveSpeed: \'slow\','."\n";
+				$content .= 'snapbackSpeed: 500,'."\n";
+				$content .= 'snapSpeed: 100,'."\n";
+				$content .= 'showNotation: '.$koordinaten.','."\n";
+				$this->getBrett($halbzug); // aktuelle Stellung aufbauen
+				$content .= 'position: \''.$this->halbzug[$halbzug-1]['fen'].'\''."\n";
+				$content .= '};'."\n";
+				$content .= 'var board_'.$this->hash.' = Chessboard(\'board_'.$this->hash.'\', config_'.$this->hash.');'."\n";
+				$content .= $this->getFarben();
+
+				// Neuen Text setzen
+				$content .= '$("#boardtext_'.$this->hash.'").html("'.$this->halbzug[$halbzug-1]['text'].'");'."\n";
+			}
 		}
 
-		// Nächster-Zug-Button verändern
-		if($this->halbzug)
+		if($this->chessboardjs_playmode == 'chessboardjs1' || $this->chessboardjs_playmode == 'chessboardjs2')
 		{
-			$naechsterZug = $halbzug + 1;
-			if($naechsterZug <= count($this->halbzug))
+			// Nächster-Zug-Button verändern
+			if($this->halbzug)
 			{
-				$content .= '$("#boardbutton_next_'.$this->hash.'").html("Nächster Zug ('.$naechsterZug.' von '.count($this->halbzug).')");'."\n";
-			}
-			elseif($naechsterZug > count($this->halbzug))
-			{
-				$content .= '$("#boardbutton_next_'.$this->hash.'").html("Nächster Zug (Grundstellung)");'."\n";
+				$naechsterZug = $halbzug + 1;
+				if($naechsterZug <= count($this->halbzug))
+				{
+					$content .= '$("#boardbutton_next_'.$this->hash.'").html("Nächster Zug ('.$naechsterZug.' von '.count($this->halbzug).')");'."\n";
+				}
+				elseif($naechsterZug > count($this->halbzug))
+				{
+					$content .= '$("#boardbutton_next_'.$this->hash.'").html("Nächster Zug (Start)");'."\n";
+				}
 			}
 		}
 
@@ -254,16 +308,25 @@ class Diagramm extends \Module
 	{
 
 		// Grundstellung auslesen und im Array speichern
-		if($this->position)
+		if($this->chessboardjs_alternativePosition)
 		{
-			foreach($this->position as $item)
+			// Eine alternative Stellung ist gewünscht, diese auslesen
+			if($this->position)
 			{
-				if($item['field'])
+				foreach($this->position as $item)
 				{
-					$this->brett[$item['field']]['figur'] = $item['piece'];
-					$this->brett[$item['field']]['farbe'] = $item['mark'];
+					if($item['field'])
+					{
+						$this->brett[$item['field']]['figur'] = $item['piece'];
+						$this->brett[$item['field']]['farbe'] = $item['mark'];
+					}
 				}
 			}
+		}
+		else
+		{
+			// Grundstellung ist gewünscht, virtuelles Brett entsprechend aufbauen
+			self::setBrett();
 		}
 
 		// Gibt es Folgezüge und gewünschter Halbzug > 0 (Grundstellung)
@@ -273,22 +336,42 @@ class Diagramm extends \Module
 			$zugindex = $halbzug - 1;
 			for($i = 0; $i <= $zugindex; $i++)
 			{
-				$vonFeld = $this->halbzug[$i]['from']; // Ausgangsfeld
-				$nachFeld = $this->halbzug[$i]['to']; // Zielfeld
-				$Felder = explode(',', $this->halbzug[$i]['markpieces']); // Farbfelder laden
-				$Farbe = $this->halbzug[$i]['markcolor']; // Farbe für diese Felder
-
-				// Figur und Markierung dem Zielfeld zuordnen und Ausgangsfeld leeren
-				$this->brett[$nachFeld] = $this->brett[$vonFeld];
-				$this->brett[$vonFeld] = array('figur' => '', 'farbe' => '');
-
-				// Markierungen ohne Figuren entfernen
-				foreach($this->brett as $key => $value)
+				if($this->chessboardjs_playmode == 'chessboardjs1')
 				{
-					if($this->brett[$key]['figur'] == '') $this->brett[$key]['farbe'] = '';
+					$vonFeld = $this->halbzug[$i]['from']; // Ausgangsfeld
+					$nachFeld = $this->halbzug[$i]['to']; // Zielfeld
+
+					// Figur und Markierung dem Zielfeld zuordnen und Ausgangsfeld leeren
+					if($this->brett[$nachFeld] != $this->brett[$vonFeld])
+					{
+						$this->brett[$nachFeld] = $this->brett[$vonFeld];
+						$this->brett[$vonFeld] = array('figur' => '', 'farbe' => '');
+					}
+
+					// Markierungen ohne Figuren entfernen
+					foreach($this->brett as $key => $value)
+					{
+						if($this->brett[$key]['figur'] == '') $this->brett[$key]['farbe'] = '';
+					}
+
+				}
+				elseif($this->chessboardjs_playmode == 'chessboardjs2')
+				{
+					self::setBrett($this->halbzug[$i]['fen']);
+					// Markierungen entfernen
+					foreach($this->brett as $key => $value)
+					{
+						$this->brett[$key]['farbe'] = '';
+					}
 				}
 
 				// Neue Farben setzen
+				$Felder = explode(',', $this->halbzug[$i]['markpieces']); // Farbfelder laden
+				$Farbe = $this->halbzug[$i]['markcolor']; // Farbe für diese Felder
+				$Felder2 = explode(',', $this->halbzug[$i]['markpieces2']); // Farbfelder laden
+				$Farbe2 = $this->halbzug[$i]['markcolor2']; // Farbe für diese Felder
+				$Felder3 = explode(',', $this->halbzug[$i]['markpieces3']); // Farbfelder laden
+				$Farbe3 = $this->halbzug[$i]['markcolor3']; // Farbe für diese Felder
 				if($Felder)
 				{
 					for($x = 0; $x < count($Felder); $x++)
@@ -297,11 +380,106 @@ class Diagramm extends \Module
 						if(isset($this->brett[$key])) $this->brett[$key]['farbe'] = $Farbe;
 					}
 				}
+				if($Felder2)
+				{
+					for($x = 0; $x < count($Felder2); $x++)
+					{
+						$key = trim($Felder2[$x]);
+						if(isset($this->brett[$key])) $this->brett[$key]['farbe'] = $Farbe2;
+					}
+				}
+				if($Felder3)
+				{
+					for($x = 0; $x < count($Felder3); $x++)
+					{
+						$key = trim($Felder3[$x]);
+						if(isset($this->brett[$key])) $this->brett[$key]['farbe'] = $Farbe3;
+					}
+				}
 			}
 		}
 
 		//$this->viewBrett();
 
+	}
+
+	/* function setBrett
+	 * ==============================================================================================
+	 * Stellt auf dem virtuellen Brett, eine Stellung nach dem übergebendem FEN-String auf
+	 * Standard ist die Grundstellung
+	*/
+	function setBrett($fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR')
+	{
+		$zeile = 8;
+		$spalte = 97;
+		$brett = array();
+		for($i = 0; $i < strlen($fen); $i++)
+		{
+			$zeichen = substr($fen, $i, 1);
+			switch($zeichen)
+			{
+				case 'r':
+					self::setFeld(chr($spalte).$zeile, 'bR');
+					$spalte++;
+					break;
+				case 'n':
+					self::setFeld(chr($spalte).$zeile, 'bN');
+					$spalte++;
+					break;
+				case 'b':
+					self::setFeld(chr($spalte).$zeile, 'bB');
+					$spalte++;
+					break;
+				case 'q':
+					self::setFeld(chr($spalte).$zeile, 'bQ');
+					$spalte++;
+					break;
+				case 'k':
+					self::setFeld(chr($spalte).$zeile, 'bK');
+					$spalte++;
+					break;
+				case 'p':
+					self::setFeld(chr($spalte).$zeile, 'bP');
+					$spalte++;
+					break;
+				case 'R':
+					self::setFeld(chr($spalte).$zeile, 'wR');
+					$spalte++;
+					break;
+				case 'N':
+					self::setFeld(chr($spalte).$zeile, 'wN');
+					$spalte++;
+					break;
+				case 'B':
+					self::setFeld(chr($spalte).$zeile, 'wB');
+					$spalte++;
+					break;
+				case 'Q':
+					self::setFeld(chr($spalte).$zeile, 'wQ');
+					$spalte++;
+					break;
+				case 'K':
+					self::setFeld(chr($spalte).$zeile, 'wK');
+					$spalte++;
+					break;
+				case 'P':
+					self::setFeld(chr($spalte).$zeile, 'wP');
+					$spalte++;
+					break;
+				case '/': $zeile--; $spalte = 97; break;
+				default:
+					for($x = 0; $x < (int)$zeichen; $x++)
+					{
+						self::setFeld(chr($spalte).$zeile, '');
+						$spalte++;
+					}
+			}
+		}
+	}
+
+	function setFeld($feld, $figur)
+	{
+		$this->brett[$feld]['figur'] = $figur;
 	}
 
 	/* function getFarben

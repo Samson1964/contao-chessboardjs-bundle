@@ -1,7 +1,42 @@
 <?php
 
 // Add palette to tl_module
-$GLOBALS['TL_DCA']['tl_module']['palettes']['chessboardjs'] = '{title_legend},name,headline,type;{chessboardjs_legend:hide},chessboardjs_coordinates,chessboardjs_width,chessboardjs_position,chessboardjs_text,chessboardjs_move;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'chessboardjs_alternativePosition';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'chessboardjs_playmode';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['chessboardjs1'] = '{title_legend},name,headline,type;{chessboardjs_main_legend},chessboardjs_coordinates,chessboardjs_width;{chessboardjs_position_legend},chessboardjs_alternativePosition,chessboardjs_text;{chessboardjs_modus_legend},chessboardjs_playmode;{chessboardjs_moves_legend},chessboardjs_move;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['chessboardjs2'] = '{title_legend},name,headline,type;{chessboardjs_main_legend},chessboardjs_coordinates,chessboardjs_width;{chessboardjs_position_legend},chessboardjs_alternativePosition,chessboardjs_text;{chessboardjs_modus_legend},chessboardjs_playmode;{chessboardjs_moves_legend},chessboardjs_fenplay;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['chessboardjs3'] = '{title_legend},name,headline,type;{chessboardjs_main_legend},chessboardjs_coordinates,chessboardjs_width;{chessboardjs_position_legend},chessboardjs_alternativePosition,chessboardjs_text;{chessboardjs_modus_legend},chessboardjs_playmode;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['chessboardjs_alternativePosition'] = 'chessboardjs_position,chessboardjs_fen';
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_alternativePosition'] = array
+(
+	'label'                               => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_alternativePosition'],
+	'exclude'                             => true,
+	'inputType'                           => 'checkbox',
+	'eval'                                => array
+	(
+		'tl_class'                        => 'w50',
+		'submitOnChange'                  => true,
+		'isBoolean'                       => true
+	),
+	'sql'                                 => "char(1) NOT NULL default ''"
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_playmode'] = array
+(
+	'label'                               => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_playmode'],
+	'exclude'                             => true,
+	'default'                             => 'chessboardjs1',
+	'inputType'                           => 'radio',
+	'options'                             => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_playmode_options'],
+	'eval'                                => array
+	(
+		'tl_class'                        => 'w50',
+		'submitOnChange'                  => true
+	),
+	'sql'                                 => "varchar(13) NOT NULL default ''"
+);
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_coordinates'] = array
 (
@@ -89,6 +124,19 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_position'] = array
 	'sql'                                 => "blob NULL"
 );
 
+$GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_fen'] = array
+(
+	'label'                               => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_fen'],
+	'exclude'                             => true,
+	'inputType'                           => 'text',
+	'eval'                                => array
+	(
+		'tl_class'                        => 'long clr',
+		'maxlength'                       => 255,
+	),
+	'sql'                                 => "tinytext NULL"
+);
+
 $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_text'] = array
 (
 	'label'                               => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_text'],
@@ -96,7 +144,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_text'] = array
 	'inputType'                           => 'text',
 	'eval'                                => array
 	(
-		'tl_class'                        => 'long',
+		'tl_class'                        => 'long clr',
 		'maxlength'                       => 255,
 	),
 	'sql'                                 => "tinytext NULL"
@@ -110,7 +158,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_move'] = array
 	'eval'                                => array
 	(
 		'tl_class'                        => 'long clr',
-		'buttonPos'                       => 'middle',
+		'buttonPos'                       => 'top',
 		'buttons'                         => array
 		(
 			'copy'                        => 'system/themes/flexible/icons/copy.svg',
@@ -129,6 +177,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_move'] = array
 				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_field_options'],
 				'eval'                    => array
 				(
+					'columnPos'           => 1,
+					'valign'              => 'top',
 					'includeBlankOption'  => true
 				)
 			),
@@ -140,6 +190,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_move'] = array
 				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_field_options'],
 				'eval'                    => array
 				(
+					'columnPos'           => 2,
+					'valign'              => 'top',
 					'includeBlankOption'  => true
 				)
 			),
@@ -150,7 +202,10 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_move'] = array
 				'inputType'               => 'text',
 				'eval'                    => array
 				(
-					'maxlength'                       => 255,
+					'columnPos'           => 3,
+					'valign'              => 'top',
+					'maxlength'           => 255,
+					'style'               => 'width:300px;'
 				)
 			),
 			'markpieces' => array
@@ -158,6 +213,10 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_move'] = array
 				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markpieces'],
 				'exclude'                 => true,
 				'inputType'               => 'text',
+				'eval'                    => array
+				(
+					'columnPos'           => 4,
+				)
 			),
 			'markcolor' => array
 			(
@@ -167,9 +226,170 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_move'] = array
 				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
 				'eval'                    => array
 				(
-					'includeBlankOption'  => true
+					'includeBlankOption'  => true,
+					'columnPos'           => 5,
 				)
 			),
+			'markpieces2' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markpieces'],
+				'exclude'                 => true,
+				'inputType'               => 'text',
+				'eval'                    => array
+				(
+					'columnPos'           => 4,
+				)
+			),
+			'markcolor2' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markcolor'],
+				'exclude'                 => true,
+				'inputType'               => 'select',
+				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
+				'eval'                    => array
+				(
+					'includeBlankOption'  => true,
+					'columnPos'           => 5,
+				)
+			),
+			'markpieces3' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markpieces'],
+				'exclude'                 => true,
+				'inputType'               => 'text',
+				'eval'                    => array
+				(
+					'columnPos'           => 4,
+				)
+			),
+			'markcolor3' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markcolor'],
+				'exclude'                 => true,
+				'inputType'               => 'select',
+				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
+				'eval'                    => array
+				(
+					'includeBlankOption'  => true,
+					'columnPos'           => 5,
+				)
+			)
+		)
+	),
+	'sql'                                 => "blob NULL"
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_fenplay'] = array
+(
+	'label'                               => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_fenplay'],
+	'exclude'                             => true,
+	'inputType'                           => 'multiColumnWizard',
+	'eval'                                => array
+	(
+		'tl_class'                        => 'long clr',
+		'buttonPos'                       => 'top',
+		'buttons'                         => array
+		(
+			'copy'                        => 'system/themes/flexible/icons/copy.svg',
+			'delete'                      => 'system/themes/flexible/icons/delete.svg',
+			'move'                        => 'system/themes/flexible/icons/drag.svg',
+			'up'                          => false,
+			'down'                        => false
+		),
+		'columnFields'                    => array
+		(
+			'fen' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_fenplay_fen'],
+				'exclude'                 => true,
+				'inputType'               => 'text',
+				'eval'                    => array
+				(
+					'columnPos'           => 1,
+					'valign'              => 'top',
+					'maxlength'           => 255,
+					'style'               => 'width:300px;'
+				)
+			),
+			'text' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_text'],
+				'exclude'                 => true,
+				'inputType'               => 'text',
+				'eval'                    => array
+				(
+					'columnPos'           => 2,
+					'valign'              => 'top',
+					'maxlength'           => 255,
+					'style'               => 'width:300px;'
+				)
+			),
+			'markpieces' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markpieces'],
+				'exclude'                 => true,
+				'inputType'               => 'text',
+				'eval'                    => array
+				(
+					'columnPos'           => 3,
+				)
+			),
+			'markcolor' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markcolor'],
+				'exclude'                 => true,
+				'inputType'               => 'select',
+				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
+				'eval'                    => array
+				(
+					'includeBlankOption'  => true,
+					'columnPos'           => 4,
+				)
+			),
+			'markpieces2' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markpieces'],
+				'exclude'                 => true,
+				'inputType'               => 'text',
+				'eval'                    => array
+				(
+					'columnPos'           => 3,
+				)
+			),
+			'markcolor2' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markcolor'],
+				'exclude'                 => true,
+				'inputType'               => 'select',
+				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
+				'eval'                    => array
+				(
+					'includeBlankOption'  => true,
+					'columnPos'           => 4,
+				)
+			),
+			'markpieces3' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markpieces'],
+				'exclude'                 => true,
+				'inputType'               => 'text',
+				'eval'                    => array
+				(
+					'columnPos'           => 3,
+				)
+			),
+			'markcolor3' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markcolor'],
+				'exclude'                 => true,
+				'inputType'               => 'select',
+				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
+				'eval'                    => array
+				(
+					'includeBlankOption'  => true,
+					'columnPos'           => 4,
+				)
+			)
 		)
 	),
 	'sql'                                 => "blob NULL"

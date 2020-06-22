@@ -14,24 +14,32 @@
 /**
  * Felder für Ausgabemodul
  */
-$GLOBALS['TL_LANG']['tl_module']['chessboardjs_legend'] = 'Diagramm-Einstellungen';
-
+$GLOBALS['TL_LANG']['tl_module']['chessboardjs_main_legend'] = 'Diagramm-Einstellungen';
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_coordinates'] = array('Koordinaten', 'Koordinaten anzeigen');
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_width'] = array('Breite', 'Breite des Diagramms, z.B. 400px oder 60%');
 
+$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_legend'] = 'Grundstellung';
+$GLOBALS['TL_LANG']['tl_module']['chessboardjs_alternativePosition'] = array('Alternative Stellung aufbauen', 'Alternative Stellung aufbauen. Die Grundstellung wird dann nicht verwendet.');
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position'] = array('Stellung aufbauen', 'Stellung aufbauen');
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_field'] = array('Feld', '');
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_piece'] = array('Figur', '');
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark'] = array('Markierung', '');
-
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_text'] = array('Text zur Stellung', 'Text zur Stellung');
+$GLOBALS['TL_LANG']['tl_module']['chessboardjs_fen'] = array('Stellung aufbauen (FEN)', 'Stellung aufbauen (FEN). Diese Stellung überschreibt die Figuren aus dem vorherigen Abschnitt. Leerlassen, wenn FEN nicht benutzt werden soll.');
 
+$GLOBALS['TL_LANG']['tl_module']['chessboardjs_modus_legend'] = 'Modus';
+$GLOBALS['TL_LANG']['tl_module']['chessboardjs_playmode'] = array('Spielmodus', 'Spielmodus festlegen');
+
+$GLOBALS['TL_LANG']['tl_module']['chessboardjs_moves_legend'] = 'Folgezüge';
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_move'] = array('Züge ausführen (je Zeile ein Halbzug)', 'Züge ausführen (je Zeile ein Halbzug)');
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_from'] = array('Von Feld', '');
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_to'] = array('Nach Feld', '');
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_text'] = array('Text', '');
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markpieces'] = array('Felder markieren', 'Zu markierende Felder mit Komma trennen, z.B. a3,b4,c5');
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markcolor'] = array('Markierungsfarbe', '');
+
+$GLOBALS['TL_LANG']['tl_module']['chessboardjs_fenplay'] = array('FEN eingeben (je Zeile eine Stellung)', 'FEN eingeben (je Zeile eine Stellung)');
+$GLOBALS['TL_LANG']['tl_module']['chessboardjs_fenplay_fen'] = array('FEN-String', '');
 
 /**
  * Optionen für Ausgabemodul
@@ -128,3 +136,11 @@ $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'] = array
 	'shadow-yellow'      => 'gelber Schatten',
 	'shadow-green'       => 'grüner Schatten',
 );
+
+$GLOBALS['TL_LANG']['tl_module']['chessboardjs_playmode_options'] = array
+(
+	'chessboardjs1'      => 'Halbzüge mit Markierungen eingeben mit Nächster-Zug-Button',
+	'chessboardjs2'      => 'Halbzüge als FEN-Strings mit Markierungen eingeben',
+	'chessboardjs3'      => 'Halbzüge als Strings mit Markierungen eingeben'
+);
+
