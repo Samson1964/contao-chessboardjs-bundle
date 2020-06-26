@@ -17,6 +17,7 @@
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_main_legend'] = 'Diagramm-Einstellungen';
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_coordinates'] = array('Koordinaten', 'Koordinaten anzeigen');
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_width'] = array('Breite', 'Breite des Diagramms, z.B. 400px oder 60%');
+$GLOBALS['TL_LANG']['tl_module']['chessboardjs_button'] = array('Spielbutton', 'Spielbutton unter dem Diagramm anzeigen');
 
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_legend'] = 'Grundstellung';
 $GLOBALS['TL_LANG']['tl_module']['chessboardjs_alternativePosition'] = array('Alternative Stellung aufbauen', 'Alternative Stellung aufbauen. Die Grundstellung wird dann nicht verwendet.');

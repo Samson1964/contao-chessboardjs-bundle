@@ -4,7 +4,7 @@
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'chessboardjs_alternativePosition';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'chessboardjs_playmode';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['chessboardjs1'] = '{title_legend},name,headline,type;{chessboardjs_main_legend},chessboardjs_coordinates,chessboardjs_width;{chessboardjs_position_legend},chessboardjs_alternativePosition,chessboardjs_text;{chessboardjs_modus_legend},chessboardjs_playmode;{chessboardjs_moves_legend},chessboardjs_move;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
-$GLOBALS['TL_DCA']['tl_module']['palettes']['chessboardjs2'] = '{title_legend},name,headline,type;{chessboardjs_main_legend},chessboardjs_coordinates,chessboardjs_width;{chessboardjs_position_legend},chessboardjs_alternativePosition,chessboardjs_text;{chessboardjs_modus_legend},chessboardjs_playmode;{chessboardjs_moves_legend},chessboardjs_fenplay;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['chessboardjs2'] = '{title_legend},name,headline,type;{chessboardjs_main_legend},chessboardjs_coordinates,chessboardjs_width,chessboardjs_button;{chessboardjs_position_legend},chessboardjs_alternativePosition,chessboardjs_text;{chessboardjs_modus_legend},chessboardjs_playmode;{chessboardjs_moves_legend},chessboardjs_fenplay;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['chessboardjs3'] = '{title_legend},name,headline,type;{chessboardjs_main_legend},chessboardjs_coordinates,chessboardjs_width;{chessboardjs_position_legend},chessboardjs_alternativePosition,chessboardjs_text;{chessboardjs_modus_legend},chessboardjs_playmode;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['chessboardjs_alternativePosition'] = 'chessboardjs_position,chessboardjs_fen';
@@ -23,11 +23,25 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_alternativePosition'] = 
 	'sql'                                 => "char(1) NOT NULL default ''"
 );
 
+$GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_button'] = array
+(
+	'label'                               => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_button'],
+	'exclude'                             => true,
+	'default'                             => 1,
+	'inputType'                           => 'checkbox',
+	'eval'                                => array
+	(
+		'tl_class'                        => 'w50',
+		'isBoolean'                       => true
+	),
+	'sql'                                 => "char(1) NOT NULL default ''"
+);
+
 $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_playmode'] = array
 (
 	'label'                               => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_playmode'],
 	'exclude'                             => true,
-	'default'                             => 'chessboardjs1',
+	//'default'                             => 'chessboardjs1',
 	'inputType'                           => 'radio',
 	'options'                             => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_playmode_options'],
 	'eval'                                => array

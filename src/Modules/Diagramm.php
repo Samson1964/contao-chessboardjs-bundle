@@ -128,14 +128,14 @@ class Diagramm extends \Module
 		self::getBrett(0);
 
 		// Buttons hinzufügen
-		if($this->halbzug) $content .= '<button id="boardbutton_next_'.$this->hash.'">Nächster Zug</button>'."\n";
+		if($this->halbzug && $this->chessboardjs_button) $content .= '<button id="boardbutton_next_'.$this->hash.'">Nächster Zug</button>'."\n";
 
 		// Skriptabschnitt erzeugen
 		$content .= '<script>'."\n";
 		$content .= 'var zug_'.$this->hash.' = 0;'."\n";
 
 		// Nächster-Zug-Button verändern
-		if($this->halbzug) $content .= '$("#boardbutton_next_'.$this->hash.'").html("Nächster Zug (1 von '.count($this->halbzug).')");'."\n";
+		if($this->halbzug && $this->chessboardjs_button) $content .= '$("#boardbutton_next_'.$this->hash.'").html("Nächster Zug (1 von '.count($this->halbzug).')");'."\n";
 
 		$content .= self::getConfigHTML();
 
@@ -165,7 +165,7 @@ class Diagramm extends \Module
 		$content .= '};'."\n";
 
 		// Button-Aktionen hinzufügen
-		if($this->halbzug) $content .= '$("#boardbutton_next_'.$this->hash.'").on("click", ZugMachen);'."\n";
+		if($this->halbzug && $this->chessboardjs_button) $content .= '$("#boardbutton_next_'.$this->hash.'").on("click", ZugMachen);'."\n";
 
 		$content .= '</script>'."\n";
 
@@ -281,7 +281,7 @@ class Diagramm extends \Module
 		if($this->chessboardjs_playmode == 'chessboardjs1' || $this->chessboardjs_playmode == 'chessboardjs2')
 		{
 			// Nächster-Zug-Button verändern
-			if($this->halbzug)
+			if($this->halbzug && $this->chessboardjs_button)
 			{
 				$naechsterZug = $halbzug + 1;
 				if($naechsterZug <= count($this->halbzug))

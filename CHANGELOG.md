@@ -1,5 +1,10 @@
 # Chessboard.js für Contao 4
 
+## Version 0.1.1 (2016-06-26)
+
+* default-Einstellung bei Modus-Auswahl in tl_module.php entfernt
+* Spielbutton unter dem Diagramm ein- und ausschaltbar
+
 ## Version 0.1.0 (2016-06-22)
 
 * Bei Folgezug, wo Ausgangs- und Zielfeld gleich sind, wurde versehentlich das Ausgangsfeld gelöscht
