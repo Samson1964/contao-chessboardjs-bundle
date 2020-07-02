@@ -1,5 +1,10 @@
 # Chessboard.js für Contao 4
 
+## Version 0.1.2 (2016-07-02)
+
+* Fix: "Nächster Zug" durch "Weiter" ersetzt
+* Spielbutton über dem Text
+
 ## Version 0.1.1 (2016-06-26)
 
 * default-Einstellung bei Modus-Auswahl in tl_module.php entfernt

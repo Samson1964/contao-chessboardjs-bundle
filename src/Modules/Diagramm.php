@@ -117,9 +117,8 @@ class Diagramm extends \Module
 			'h1' => array('figur' => '', 'farbe' => ''),
 		);
 
-		// Diagramm-Container und Text
+		// Diagramm-Container
 		$content .= '<div id="board_'.$this->hash.'" class="chessboardjs_brett" style="width:'.$this->chessboardjs_width.'"></div>'."\n";
-		$content .= '<div id="boardtext_'.$this->hash.'" class="chessboardjs_text" style="width:'.$this->chessboardjs_width.'"></div>'."\n";
 
 		$this->position = unserialize($this->chessboardjs_position);
 		if($this->chessboardjs_playmode == 'chessboardjs1') $this->halbzug = unserialize($this->chessboardjs_move);
@@ -128,14 +127,17 @@ class Diagramm extends \Module
 		self::getBrett(0);
 
 		// Buttons hinzufügen
-		if($this->halbzug && $this->chessboardjs_button) $content .= '<button id="boardbutton_next_'.$this->hash.'">Nächster Zug</button>'."\n";
+		if($this->halbzug && $this->chessboardjs_button) $content .= '<button id="boardbutton_next_'.$this->hash.'">Weiter</button>'."\n";
+
+		// Diagramm-Text
+		$content .= '<div id="boardtext_'.$this->hash.'" class="chessboardjs_text" style="width:'.$this->chessboardjs_width.'"></div>'."\n";
 
 		// Skriptabschnitt erzeugen
 		$content .= '<script>'."\n";
 		$content .= 'var zug_'.$this->hash.' = 0;'."\n";
 
 		// Nächster-Zug-Button verändern
-		if($this->halbzug && $this->chessboardjs_button) $content .= '$("#boardbutton_next_'.$this->hash.'").html("Nächster Zug (1 von '.count($this->halbzug).')");'."\n";
+		if($this->halbzug && $this->chessboardjs_button) $content .= '$("#boardbutton_next_'.$this->hash.'").html("Weiter (1 von '.count($this->halbzug).')");'."\n";
 
 		$content .= self::getConfigHTML();
 
@@ -286,11 +288,11 @@ class Diagramm extends \Module
 				$naechsterZug = $halbzug + 1;
 				if($naechsterZug <= count($this->halbzug))
 				{
-					$content .= '$("#boardbutton_next_'.$this->hash.'").html("Nächster Zug ('.$naechsterZug.' von '.count($this->halbzug).')");'."\n";
+					$content .= '$("#boardbutton_next_'.$this->hash.'").html("Weiter ('.$naechsterZug.' von '.count($this->halbzug).')");'."\n";
 				}
 				elseif($naechsterZug > count($this->halbzug))
 				{
-					$content .= '$("#boardbutton_next_'.$this->hash.'").html("Nächster Zug (Start)");'."\n";
+					$content .= '$("#boardbutton_next_'.$this->hash.'").html("Weiter (Start)");'."\n";
 				}
 			}
 		}
