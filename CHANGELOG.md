@@ -1,5 +1,9 @@
 # Chessboard.js für Contao 4
 
+## Version 1.0.0 (2025-09-09)
+
+* Add: Abhängigkeit PHP 8
+
 ## Version 0.1.2 (2016-07-02)
 
 * Fix: "Nächster Zug" durch "Weiter" ersetzt
