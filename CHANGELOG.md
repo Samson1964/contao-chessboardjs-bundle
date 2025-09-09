@@ -1,5 +1,20 @@
 # Chessboard.js für Contao 4
 
+## Version 1.0.1 (2025-09-09)
+
+* Fix: Warning: Undefined array key "chessboardjs_playmode_options" ["exception" => ErrorException { …}]
+* Fix: Warning: Undefined array key "chessboardjs_position_field_options" ["exception" => ErrorException { …}]
+* Fix: Warning: Undefined array key "chessboardjs_position_piece_options" ["exception" => ErrorException { …}]
+* Fix: Warning: Undefined array key "chessboardjs_position_mark_options" ["exception" => ErrorException { …}]
+* Fix: Warning: Undefined array key "chessboardjs_position_field_options" ["exception" => ErrorException { …}]
+* Fix: Warning: Undefined array key "chessboardjs_position_field_options" ["exception" => ErrorException { …}]
+* Fix: Warning: Undefined array key "chessboardjs_position_mark_options" ["exception" => ErrorException { …}]
+* Fix: Warning: Undefined array key "chessboardjs_position_mark_options" ["exception" => ErrorException { …}]
+* Fix: Warning: Undefined array key "chessboardjs_position_mark_options" ["exception" => ErrorException { …}]
+* Fix: Warning: Undefined array key "chessboardjs_position_mark_options" ["exception" => ErrorException { …}]
+* Fix: Warning: Undefined array key "chessboardjs_position_mark_options" ["exception" => ErrorException { …}]
+* Fix: Warning: Undefined array key "chessboardjs_position_mark_options" ["exception" => ErrorException { …}]
+
 ## Version 1.0.0 (2025-09-09)
 
 * Add: Abhängigkeit PHP 8

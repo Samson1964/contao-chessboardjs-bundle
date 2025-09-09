@@ -43,7 +43,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_playmode'] = array
 	'exclude'                             => true,
 	//'default'                             => 'chessboardjs1',
 	'inputType'                           => 'radio',
-	'options'                             => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_playmode_options'],
+	'options'                             => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_playmode_options'],
 	'eval'                                => array
 	(
 		'tl_class'                        => 'w50',
@@ -105,7 +105,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_position'] = array
 				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_field'],
 				'exclude'                 => true,
 				'inputType'               => 'select',
-				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_field_options'],
+				'options'                 => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_field_options'],
 				'eval'                    => array
 				(
 					'includeBlankOption'  => true
@@ -116,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_position'] = array
 				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_piece'],
 				'exclude'                 => true,
 				'inputType'               => 'select',
-				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_piece_options'],
+				'options'                 => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_piece_options'],
 				'eval'                    => array
 				(
 					'includeBlankOption'  => true
@@ -127,7 +127,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_position'] = array
 				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark'],
 				'exclude'                 => true,
 				'inputType'               => 'select',
-				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
+				'options'                 => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
 				'eval'                    => array
 				(
 					'includeBlankOption'  => true
@@ -188,7 +188,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_move'] = array
 				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_from'],
 				'exclude'                 => true,
 				'inputType'               => 'select',
-				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_field_options'],
+				'options'                 => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_field_options'],
 				'eval'                    => array
 				(
 					'columnPos'           => 1,
@@ -201,7 +201,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_move'] = array
 				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_to'],
 				'exclude'                 => true,
 				'inputType'               => 'select',
-				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_field_options'],
+				'options'                 => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_field_options'],
 				'eval'                    => array
 				(
 					'columnPos'           => 2,
@@ -237,7 +237,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_move'] = array
 				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markcolor'],
 				'exclude'                 => true,
 				'inputType'               => 'select',
-				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
+				'options'                 => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
 				'eval'                    => array
 				(
 					'includeBlankOption'  => true,
@@ -259,7 +259,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_move'] = array
 				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markcolor'],
 				'exclude'                 => true,
 				'inputType'               => 'select',
-				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
+				'options'                 => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
 				'eval'                    => array
 				(
 					'includeBlankOption'  => true,
@@ -281,7 +281,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_move'] = array
 				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markcolor'],
 				'exclude'                 => true,
 				'inputType'               => 'select',
-				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
+				'options'                 => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
 				'eval'                    => array
 				(
 					'includeBlankOption'  => true,
@@ -353,7 +353,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_fenplay'] = array
 				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markcolor'],
 				'exclude'                 => true,
 				'inputType'               => 'select',
-				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
+				'options'                 => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
 				'eval'                    => array
 				(
 					'includeBlankOption'  => true,
@@ -375,7 +375,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_fenplay'] = array
 				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markcolor'],
 				'exclude'                 => true,
 				'inputType'               => 'select',
-				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
+				'options'                 => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
 				'eval'                    => array
 				(
 					'includeBlankOption'  => true,
@@ -397,7 +397,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['chessboardjs_fenplay'] = array
 				'label'                   => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_move_markcolor'],
 				'exclude'                 => true,
 				'inputType'               => 'select',
-				'options'                 => $GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
+				'options'                 => &$GLOBALS['TL_LANG']['tl_module']['chessboardjs_position_mark_options'],
 				'eval'                    => array
 				(
 					'includeBlankOption'  => true,
